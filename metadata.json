@@ -1,0 +1,7 @@
+{
+	"uuid": "grab-window-info@yaware.com",
+	"name": "Yaware.TimeTracker Gnome Extension",
+	"description": "Allows integration of the Yaware desktop application with the GNOME Shell environment.",
+	"shell-version": ["45", "46", "47", "48"],
+	"url": "https://github.com/yaware-projects/yaware_gnome_extension.git"
+}
