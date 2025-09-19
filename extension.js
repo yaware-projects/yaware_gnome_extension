@@ -1,4 +1,7 @@
-const { Gio, Shell, GLib } = imports.gi;
+import Gio from 'gi://Gio';
+import Shell from 'gi://Shell';
+import GLib from 'gi://GLib';
+import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 Gio._promisify(Shell.Screenshot.prototype, 'pick_color');
 Gio._promisify(Shell.Screenshot.prototype, 'screenshot');
@@ -6,8 +9,6 @@ Gio._promisify(Shell.Screenshot.prototype, 'screenshot_window');
 Gio._promisify(Shell.Screenshot.prototype, 'screenshot_area');
 Gio._promisify(Shell.Screenshot.prototype, 'screenshot_stage_to_content');
 Gio._promisify(Shell.Screenshot, 'composite_to_stream');
-
-import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const MR_DBUS_IFACE = `
 <node>
