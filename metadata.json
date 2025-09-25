@@ -3,6 +3,6 @@
 	"name": "Yaware.TimeTracker Companion Extension",
 	"description": "Allows integration of the Yaware desktop application with the GNOME Shell environment.",
 	"version": 2,
-	"shell-version": ["45", "46", "47", "48"],
+	"shell-version": ["41", "42", "43", "44"],
 	"url": "https://github.com/yaware-projects/yaware_gnome_extension.git"
 }

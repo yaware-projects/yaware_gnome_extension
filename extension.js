@@ -1,7 +1,4 @@
-import Gio from 'gi://Gio';
-import Shell from 'gi://Shell';
-import GLib from 'gi://GLib';
-import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
+const { Gio, Shell, GLib } = imports.gi;
 
 Gio._promisify(Shell.Screenshot.prototype, 'pick_color');
 Gio._promisify(Shell.Screenshot.prototype, 'screenshot');
@@ -16,55 +13,42 @@ const MR_DBUS_IFACE = `
         <method name="ListWindow">
             <arg type="s" direction="out" name="windows"/>
         </method>
-        <method name="ActiveWindow">
-            <arg type="s" direction="out" name="window"/>
-        </method>
-        <method name="TakeScreenshot">
-            <arg type="b" direction="in" name="includeCursor"/>
-            <arg type="s" direction="in" name="inputPath"/>
-            <arg type="b" direction="out" name="result"/>
-        </method>
+    <method name="ActiveWindow">
+        <arg type="s" direction="out" name="window"/>
+    </method>
+    <method name="TakeScreenshot">
+        <arg type="b" direction="in" name="includeCursor"/>
+        <arg type="s" direction="in" name="inputPath"/>
+        <arg type="b" direction="out" name="result"/>
+    </method>
     </interface>
 </node>`;
 
-export default class GrabWindowInfoExtension extends Extension {
+
+class Extension {
     enable() {
         this._dbus = Gio.DBusExportedObject.wrapJSObject(MR_DBUS_IFACE, this);
         this._dbus.export(Gio.DBus.session, '/org/gnome/Shell/Extensions/Yaware');
     }
 
     disable() {
-        if (this._dbus) {
-            this._dbus.flush();
-            this._dbus.unexport();
-            delete this._dbus;
-        }
+        this._dbus.flush();
+        this._dbus.unexport();
+        delete this._dbus;
     }
 
     ListWindow() {
         let win = global.get_window_actors()
             .map(a => a.meta_window)
-            .map(w => ({
-                id: w.get_id(),
-                pid: w.get_pid(),
-                class: w.get_wm_class(),
-                title: w.get_title(),
-                focus: w.has_focus()
-            }));
+            .map(w => ({ id: w.get_id(), pid: w.get_pid(), class: w.get_wm_class(), title: w.get_title(), focus: w.has_focus()}));
         return JSON.stringify(win);
     }
 
     ActiveWindow() {
         let win = global.get_window_actors()
             .map(a => a.meta_window)
-            .map(w => ({
-                id: w.get_id(),
-                pid: w.get_pid(),
-                class: w.get_wm_class(),
-                title: w.get_title(),
-                focus: w.has_focus()
-            }))
-            .filter(w => w.focus === true);
+            .map(w => ({ id: w.get_id(), pid: w.get_pid(), class: w.get_wm_class(), title: w.get_title(), focus: w.has_focus() }))
+            .filter(function(w) { return w.focus === true; });
         return JSON.stringify(win);
     }
 
@@ -84,3 +68,6 @@ export default class GrabWindowInfoExtension extends Extension {
     }
 }
 
+function init() {
+    return new Extension();
+}
