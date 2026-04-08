@@ -37,7 +37,7 @@ export default class GrabWindowInfoExtension extends Extension {
         if (this._dbus) {
             this._dbus.flush();
             this._dbus.unexport();
-            delete this._dbus;
+            this._dbus = null;
         }
     }
 
