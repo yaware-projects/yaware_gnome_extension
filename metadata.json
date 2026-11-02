@@ -2,7 +2,7 @@
 	"uuid": "yaware-extension@yaware.com",
 	"name": "Yaware.TimeTracker Companion Extension",
 	"description": "Allows integration of the Yaware desktop application with the GNOME Shell environment.",
-	"version": 5,
-	"shell-version": ["45", "46", "47", "48", "49", "50"],
+	"version": 6,
+	"shell-version": ["45", "46", "47", "48", "49", "50", "51"],
 	"url": "https://github.com/yaware-projects/yaware_gnome_extension.git"
 }
